@@ -27,7 +27,7 @@ class P2P_Client():
     def sendRegisterMessage(self):
         # request
         msg = f'REGISTER P2P-CI/1.0 \n Host: {self.hostName} \n Port: {self.uploadPort} \n'
-        self.sendStream()
+        self.sendStream(msg)
 
         # response
         recvmsg = self.recvStream()
@@ -174,17 +174,20 @@ def menu(p2p_client):
 
 
 def main():
-    print("Enter IP address of the host")
-    IP = input()
-    print("Enter Host name")
-    HOST = input()
-    print("Enter Upload Port number")
-    PORT = int(input())
+    #print("Enter IP address of the host")
+    #IP = input()
+    #print("Enter Host name")
+    #HOST = input()
+    #print("Enter Upload Port number")
+    #PORT = int(input())
 
+    IP = '127.0.0.1'
+    HOST = 'localhost'
+    PORT = 12345
     p2p_client = P2P_Client(HOST, IP, PORT)
 
     try:
-        thread_first = threading.Thread(target=p2p_server.p2p_server_start)
+        thread_first = threading.Thread(target=p2p_client.p2p_server.p2p_server_start)
         thread_second = threading.Thread(target=menu, args=p2p_client)
         thread_first.daemon = True
         thread_second.daemon = True
