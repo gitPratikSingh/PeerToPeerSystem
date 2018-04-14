@@ -14,19 +14,23 @@ class P2P_Client():
     def __init__(self, hostName, hostip, uploadPort):
         self.hostName = hostName
         self.uploadPort = uploadPort
+        self.hostPort = uploadPort
         self.hostIP = hostip
         self.fetchLocalRFCs()
         self.connectServer()
         self.sendRegisterMessage()
         self.sendRFCList()
-        self.p2p_server = P2P_Server(hostName, hostip, uploadPort)
+        self.p2p_server = P2P_Server.P2P_Server(hostName, hostip, uploadPort)
+        print("P2S Init Successful")
 
     def fetchLocalRFCs(self):
         print("")
 
     def sendRegisterMessage(self):
         # request
-        msg = f'REGISTER P2P-CI/1.0 \n Host: {self.hostName} \n Port: {self.uploadPort} \n'
+        msg = f'REGISTER P2P-CI/1.0 \nHost: {self.hostName} \nPort: {self.uploadPort} \n'
+        print("Inside Register Client,msg: ")
+        print(msg)
         self.sendStream(msg)
 
         # response
@@ -37,6 +41,7 @@ class P2P_Client():
         global serverName
         global serverPort
         self.clientSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        print(self.clientSocket)
         self.clientSocket.connect((P2P_Client.serverName, P2P_Client.serverPort))
 
     def sendRFCList(self):
@@ -46,15 +51,16 @@ class P2P_Client():
         return msg
 
     def sendStream(self, msg):
-        msg = input(f'msg')
-        self.clientSocket.send(msg)
+        print(msg)
+        self.clientSocket.send(msg.encode('utf-8'))
 
     def recvStream(self):
-        return self.clientSocket.recv(1024)
+        msg = self.clientSocket.recv(1024)
+        return msg.decode('utf-8')
 
     def ADD(self, rfc):
         # request
-        msg = f'ADD RFC {rfc[0]} P2P-CI/1.0 \n Host: {self.hostName} \n Port: {self.hostPort} \n Title: {rfc[1]} \n'
+        msg = f'ADD RFC {rfc[0]} P2P-CI/1.0\nHost: {self.hostName}\nPort: {self.hostPort}\nTitle: {rfc[1]}\n'
         self.sendStream(msg)
 
         # response
@@ -63,7 +69,7 @@ class P2P_Client():
 
     def LIST(self):
         # request
-        msg = f'LIST ALL P2P-CI/1.0 \n Host: {self.hostName} \n Port: {self.hostPort} \n'
+        msg = f'LIST ALL P2P-CI/1.0\nHost: {self.hostName}\nPort: {self.hostPort}\n'
         self.sendStream(msg)
 
         # response
@@ -72,7 +78,7 @@ class P2P_Client():
 
     def LOOKUP(self, rfc):
         # request
-        msg = f'LOOKUP RFC {rfc[0]} P2P-CI/1.0 \n Host: {self.hostName} \n Port: {self.hostPort} \n Title: {rfc[1]} \n'
+        msg = f'LOOKUP RFC {rfc[0]} P2P-CI/1.0\nHost: {self.hostName}\nPort: {self.hostPort}\nTitle: {rfc[1]}\n'
         self.sendStream(msg)
 
         # response
@@ -125,7 +131,6 @@ def menu(p2p_client):
         print("3. Add RFC")
         print("4. Get RFC file")
         print("5. Exit")
-        print("6. Remove a RFC")
 
         choice = int(input())
 
@@ -187,14 +192,15 @@ def main():
     p2p_client = P2P_Client(HOST, IP, PORT)
 
     try:
-        thread_first = threading.Thread(target=p2p_client.p2p_server.p2p_server_start)
-        thread_second = threading.Thread(target=menu, args=p2p_client)
-        thread_first.daemon = True
+        print("In main")
+        # thread_first = threading.Thread(target=p2p_client.p2p_server.p2p_server_start)
+        thread_second = threading.Thread(target=menu, args=(p2p_client,))
+        # thread_first.daemon = True
         thread_second.daemon = True
-        thread_first.start()
+        # thread_first.start()
         thread_second.start()
 
-        thread_first.join()
+        # thread_first.join()
         thread_second.join()
 
     except KeyboardInterrupt:
