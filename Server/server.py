@@ -1,6 +1,6 @@
 import socket
 import threading
-import os
+import re
 import sys
 
 
@@ -34,7 +34,7 @@ class Server:
         self.serverSocket = self.listen()
 
     def listen(self):
-        server_socket = socket.socket()
+        server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         server_socket.bind((self.serverName, self.serverPort))
         server_socket.listen()
         print('The server is up!')
@@ -49,7 +49,7 @@ class Server:
         self.sendStream(connecitonSocket, msg)
 
     def sendStream(self, connectionSocket, msg):
-        msg = raw_input(f'{msg}')
+        msg = msg.encode('utf-8')
         connectionSocket.send(msg)
 
     def addOK(self, connectionSocket, request):
@@ -67,7 +67,7 @@ class Server:
 
                 if counter == 0:
                     words = line.split(' ')
-                    msg += f'{words[0]} {words[1]} '
+                    msg += f'{words[0]} {words[1]}'
                 elif counter == 1:
                     words = line.split(':')
                     host = words[1][1:]
@@ -79,14 +79,18 @@ class Server:
                     words = line.split(':')
                     title = words[1]
             msg += f'{title}{msg_host}{port}\n'     #each line format is: RFC {number} {host} {port} {title}
+
         self.sendStream(connectionSocket, msg)
-        return msg, host
+        return msg
 
     def addRFC(self, msg):
+        print("hi"+str(msg))
         lines = msg.split('\n')
         lines.pop(0)
+        lines.pop()
         for line in lines:
             words = line.split(' ')
+            print(words)
             Server.rfcList.insert(0, RFCRecord(words[1], words[2], words[3], words[4])) #number,title,host name,port
 
     def verNotSupport(self, connectionSocket):
@@ -98,10 +102,11 @@ class Server:
         lines = request.split('\n')
         rfc_line = lines[0].split(' ')
         rfc_num = rfc_line[2]
+        rfc_title = lines[3].split(': ')[1]
         response_code = -1
         flag = 0
         for rfc in Server.rfcList:
-            if int(rfc.rfc_number) == int(rfc_num):
+            if (int(rfc.rfc_number) == int(rfc_num)) and (rfc.rfc_title == rfc_title):
                 lookup_list.append(RFCRecord(rfc.rfc_number, rfc.rfc_title, rfc.clientName, rfc.client_port))
                 flag = 1
                 response_code = 200
@@ -130,10 +135,13 @@ def p2s_server():
     server1 = Server()
     while 1:
         connectionSocket, addr = server1.serverSocket.accept()
+        print("Client Connected")
         request = connectionSocket.recv(1024)
+        request = request.decode('utf-8')
+
         parse = request.split('\n')
-        if parse[0] != 'REGISTER': # parse[0] = request type
-            server1.BADREQUESTconnect(connecitonSocket)
+        if parse[0].split(' ')[0] != 'REGISTER': # parse[0] = request type
+            server1.BADREQUESTconnect(connectionSocket)
             connectionSocket.close()
             continue
         else:
@@ -150,11 +158,21 @@ def p2s_server():
 
 
 def server_client(self, connectionSocket):
-    request = connectionSocket.recv(1024)
-    lines = request.split('\n')
-    words = lines[0].split(' ')  # words->[type, RFC number, version]
-    version = words[3].split('/')
     while 1:
+        request = connectionSocket.recv(1024)
+        request = request.decode('utf-8')
+
+        lines = request.split('\n')
+        words = lines[0].split(' ')  # words->[type, RFC number, version]
+        regex = r"P2P-CI\/\d*.\d*"
+        match = re.search(regex, lines[0])
+        first = match.group(0)
+        version = first.split('/')
+
+        print(request)
+        print(words)
+        print(version)
+
         if float(version[1]) > 1.0:
             self.verNotSupport(connectionSocket)
         elif words[0] == 'ADD':
@@ -166,6 +184,7 @@ def server_client(self, connectionSocket):
             if code == 200:
                 msg = 'P2P-CI/1.0 200 OK\n'
                 for rfc in lookup_list:
+                    print("rfc:" + str(rfc))
                     msg += f'RFC {rfc.rfc_number} {rfc.rfc_title} {rfc.clientName} {rfc.client_port}\n'
             elif code == 404:
                 msg = 'P2P-CI/1.0 404 Not Found'
@@ -182,6 +201,8 @@ def server_client(self, connectionSocket):
             self.sendStream(connectionSocket, msg)
             connectionSocket.close()
             return
+
+    print("end while")
 
 
 if __name__ == "__main__":
