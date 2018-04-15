@@ -24,7 +24,12 @@ class P2P_Client():
         print("P2S Init Successful")
 
     def fetchLocalRFCs(self):
-        print("")
+        #populate the list of local RFCs
+        dataDir = os.path.join(os.getcwd(), 'RFC_REPO')
+        file_list = os.listdir(dataDir)
+        for tmpfile in file_list:
+            rfc = tmpfile.split('.')[0].split('-')[1:3]
+            P2P_Client.rfcList.append(rfc)
 
     def sendRegisterMessage(self):
         # request
@@ -45,17 +50,21 @@ class P2P_Client():
         self.clientSocket.connect((P2P_Client.serverName, P2P_Client.serverPort))
 
     def sendRFCList(self):
-        msg = ''
         for rfc in P2P_Client.rfcList:
-            msg = msg + self.ADD(rfc)
-        return msg
+            self.ADD(rfc)
 
-    def sendStream(self, msg):
+    def sendStream(self, msg, peerSocket=None):
         print(msg)
-        self.clientSocket.send(msg.encode('utf-8'))
+        if(peerSocket):
+            peerSocket.send(msg.encode('utf-8'))
+        else:
+            self.clientSocket.send(msg.encode('utf-8'))
 
-    def recvStream(self):
-        msg = self.clientSocket.recv(1024)
+    def recvStream(self, peerSocket=None):
+        if(peerSocket):
+            msg = peerSocket.recv(1024)
+        else:
+            msg = self.clientSocket.recv(1024)
         return msg.decode('utf-8')
 
     def ADD(self, rfc):
@@ -92,21 +101,23 @@ class P2P_Client():
 
         message = "GET RFC" + " " + str(
             rfc_number) + " " + "P2P-CI/1.0" + "\n" + "Host: " + peer_host_name + "\n" + "OS: Windows \n"
-        file_name = str(rfc_number) + "-" + rfc_title + ".txt"
+        file_name = 'rfc' + str(rfc_number) + "-" + 'rfc_title' + ".txt"
 
-        peer_socket.send(message)
-        reply = peer_socket.recv(1024)
+        self.sendStream(message, peerSocket=peer_socket)
+        reply = self.recvStream(peerSocket=peer_socket)
 
-        reply_list = re.split(reply)
-        os.chdir(os.getcwd())
+        reply_list = reply.split(' ')
+        dataDir = os.path.join(os.getcwd(), 'RFC_REPO')
+        file_name = os.path.join(dataDir, file_name)
 
         if str(reply_list[1]) == '200':
-
+            # todo,use content length and terminate the receive request accordingly
             rfc_file = open(file_name, 'wb')
             while True:
                 recv_rfc_data = peer_socket.recv(1024)
                 if recv_rfc_data:
                     rfc_file.write(recv_rfc_data)
+                    print("Data writing" + str(len(recv_rfc_data)))
                 else:
                     rfc_file.close()
 
@@ -121,6 +132,7 @@ class P2P_Client():
         # response
         recvmsg = self.recvStream()
         print(recvmsg)
+        self.clientSocket.close()
 
 
 def menu(p2p_client):
@@ -175,7 +187,7 @@ def menu(p2p_client):
 
         if choice == 5:
             p2p_client.REMOVE_CLIENT()
-
+            print("bye!")
 
 
 def main():
@@ -193,14 +205,14 @@ def main():
 
     try:
         print("In main")
-        # thread_first = threading.Thread(target=p2p_client.p2p_server.p2p_server_start)
+        thread_first = threading.Thread(target=p2p_client.p2p_server.p2p_server_start)
         thread_second = threading.Thread(target=menu, args=(p2p_client,))
-        # thread_first.daemon = True
+        thread_first.daemon = True
         thread_second.daemon = True
-        # thread_first.start()
+        thread_first.start()
         thread_second.start()
 
-        # thread_first.join()
+        thread_first.join()
         thread_second.join()
 
     except KeyboardInterrupt:

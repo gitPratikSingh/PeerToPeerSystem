@@ -91,7 +91,7 @@ class Server:
         for line in lines:
             words = line.split(' ')
             print(words)
-            Server.rfcList.insert(0, RFCRecord(words[1], words[2], words[3], words[4])) #number,title,host name,port
+            Server.rfcList.insert(0, RFCRecord(words[1], ' '.join(words[2:len(words)-2]), words[len(words)-2], words[len(words)-1])) #number,title,host name,port
 
     def verNotSupport(self, connectionSocket):
         msg = 'P2P-CI/1.0 505 P2P-CI Version Not Supported'
@@ -165,6 +165,7 @@ def server_client(self, connectionSocket):
         lines = request.split('\n')
         words = lines[0].split(' ')  # words->[type, RFC number, version]
         regex = r"P2P-CI\/\d*.\d*"
+        #print("msg:" +lines[0])
         match = re.search(regex, lines[0])
         first = match.group(0)
         version = first.split('/')
