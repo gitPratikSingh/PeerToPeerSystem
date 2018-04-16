@@ -2,7 +2,6 @@ import socket
 import threading
 import re
 import os
-import time
 import platform
 import datetime
 
@@ -23,7 +22,7 @@ class P2P_Server():
         print("Started listening for" + str(client_socket))
         while (1):
             (peer_socket, peer_addr) = client_socket.accept()
-            print("Connected to" + str(peer_addr))
+            #print("Connected to" + str(peer_addr))
 
             thread = threading.Thread(target=self.sendRFC, args=("sendRFC", peer_socket,))
             thread.start()
@@ -73,15 +72,15 @@ class P2P_Server():
                     self.sendStream(sock, msg)
 
                 else:
-                    file_data = "P2P-CI/1.0 200 OK" + "\n"
-                    self.sendStream(sock, file_data)
+                    msg = "P2P-CI/1.0 200 OK" + "\n"
+                    self.sendStream(sock, msg)
                     file_name = os.path.join(dataDir, matchfile)
-                    now = datetime.datetime.now()
-                    print("Date: %s" % now)
+                    msg = "Date: " +datetime.datetime.strftime(datetime.datetime.utcnow(),"%a, %d %b %Y %H:%M:%S %ZGMT\n")
+                    msg = msg + "OS: %s" % platform.system() + ' ' + platform.release()+ "\n"
+                    msg = msg + "Last-Modified: %s" % datetime.datetime.fromtimestamp(os.path.getmtime(file_name)).strftime("%a, %d %b %Y %H:%M:%S %ZGMT\n")
+                    msg = msg + "Content-Length: %s" % os.path.getsize(file_name)
 
-                    print("OS: %s" % platform.system() +' ' + platform.release())
-                    print("last modified: %s" % time.ctime(os.path.getmtime(file_name)))
-                    print("content length: %s" % os.path.getsize(file_name))
+                    self.sendStream(sock, msg)
 
                     with open(file_name, 'r') as f:
                         msg = f.read(1024)

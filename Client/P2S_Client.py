@@ -28,14 +28,15 @@ class P2P_Client():
         dataDir = os.path.join(os.getcwd(), 'RFC_REPO')
         file_list = os.listdir(dataDir)
         for tmpfile in file_list:
-            rfc = tmpfile.split('.')[0].split('-')[1:3]
-            P2P_Client.rfcList.append(rfc)
+            try:
+                rfc = tmpfile.split('.')[0].split('-')[1:3]
+                P2P_Client.rfcList.append(rfc)
+            except IndexError:
+                print(str(tmpfile) + " is not correct format")
 
     def sendRegisterMessage(self):
         # request
         msg = f'REGISTER P2P-CI/1.0 \nHost: {self.hostName} \nPort: {self.uploadPort} \n'
-        print("Inside Register Client,msg: ")
-        print(msg)
         self.sendStream(msg)
 
         # response
@@ -69,8 +70,12 @@ class P2P_Client():
 
     def ADD(self, rfc):
         # request
-        msg = f'ADD RFC {rfc[0]} P2P-CI/1.0\nHost: {self.hostName}\nPort: {self.hostPort}\nTitle: {rfc[1]}\n'
-        self.sendStream(msg)
+        try:
+            msg = f'ADD RFC {rfc[0]} P2P-CI/1.0\nHost: {self.hostName}\nPort: {self.hostPort}\nTitle: {rfc[1]}\n'
+            self.sendStream(msg)
+        except IndexError:
+            print('RFC format not correct')
+            return
 
         # response
         recvmsg = self.recvStream()
@@ -111,13 +116,20 @@ class P2P_Client():
         file_name = os.path.join(dataDir, file_name)
 
         if str(reply_list[1]) == '200':
-            # todo,use content length and terminate the receive request accordingly
+            # todo, use content length and terminate the receive request accordingly
+            recv_rfc_data = self.recvStream(peerSocket=peer_socket)
+            regex = r"Content-Length: \d*"
+            match = re.search(regex, recv_rfc_data)
+            first = match.group(0)
+            contentlength = (int)(first.split(': ')[1])
+
             rfc_file = open(file_name, 'wb')
-            while True:
+            while contentlength>0:
                 recv_rfc_data = peer_socket.recv(1024)
                 if recv_rfc_data:
                     rfc_file.write(recv_rfc_data)
-                    print("Data writing" + str(len(recv_rfc_data)))
+                    #print("Data writing" + str(contentlength))
+                    contentlength = contentlength - len(recv_rfc_data)
                 else:
                     rfc_file.close()
 
@@ -175,14 +187,31 @@ def menu(p2p_client):
 
         if choice == 4:
             print("Enter RFC number")
-            rfc_number = int(input())
+            rfc_number = input()
+            try:
+                rfc_number = (int)(rfc_number)
+            except ValueError:
+                if rfc_number != '':
+                    print("Please enter an integer for rfc")
+                    return
+
             print("Enter the title for the RFC")
             rfc_title = input()
             print("Enter Peer's Hostname")
             peer_host_name = input()
             print("Enter Peer port number")
-            port_peer = int(input())
+            port_peer = input()
+            try:
+                port_peer = (int)(port_peer)
+            except ValueError:
+                if port_peer!='':
+                    print("Please enter an integer for port_peer")
+                    return
 
+            rfc_number = 2822 if rfc_number == '' else rfc_number
+            rfc_title= 'Internet Message Format' if rfc_title == '' else rfc_title
+            peer_host_name='localhost' if peer_host_name == '' else peer_host_name
+            port_peer = 12345 if port_peer == '' else port_peer
             p2p_client.GET_RFC(rfc_number, rfc_title, peer_host_name, port_peer)
 
         if choice == 5:
@@ -191,16 +220,24 @@ def menu(p2p_client):
 
 
 def main():
-    #print("Enter IP address of the host")
-    #IP = input()
-    #print("Enter Host name")
-    #HOST = input()
-    #print("Enter Upload Port number")
-    #PORT = int(input())
+    print("Enter IP address of the host (Enter for default value)")
+    IP = input()
+    print("Enter Host name (Enter for default value)")
+    HOST = input()
+    print("Enter Upload Port number (Enter for default value)")
+    PORT = input()
+    try:
+        PORT = (int)(PORT)
+    except ValueError:
+        if PORT !='':
+            print("Please enter an integer for port")
+            return
 
-    IP = '127.0.0.1'
-    HOST = 'localhost'
-    PORT = 12345
+    #[on_true] if [expression] else [on_false]
+
+    IP = '127.0.0.1' if IP == '' else IP
+    HOST = 'localhost' if HOST == '' else HOST
+    PORT = 12345 if PORT == '' else PORT
     p2p_client = P2P_Client(HOST, IP, PORT)
 
     try:

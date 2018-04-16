@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1210b383-6073-47a9-96b4-8f3991d21f6a" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client/P2P_Server.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/P2P_Server.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Client/P2S_Client.py" beforeDir="false" afterPath="$PROJECT_DIR$/Client/P2S_Client.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/Server/server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client/RFC_REPO/rfc2822-rfc_title.txt" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -14,12 +15,12 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file leaf-file-name="P2S_Client.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Client/P2S_Client.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="113" column="83" selection-start-line="113" selection-start-column="83" selection-end-line="113" selection-end-column="83" />
+            <state relative-caret-position="187">
+              <caret line="193" column="33" selection-start-line="193" selection-start-column="33" selection-end-line="193" selection-end-column="33" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -27,11 +28,29 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="rfc-2821-Simple Mail Transfer Protocol.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Client/RFC_REPO/rfc-2821-Simple Mail Transfer Protocol.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="261">
+              <caret line="4426" column="1" lean-forward="true" selection-start-line="4426" selection-start-column="1" selection-end-line="4426" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="rfc-2822-Internet Message Format.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Client/RFC_REPO/rfc-2822-Internet Message Format.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="278">
+              <caret line="2859" lean-forward="true" selection-start-line="2859" selection-end-line="2859" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="P2P_Server.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Client/P2P_Server.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="93" column="24" lean-forward="true" selection-start-line="93" selection-start-column="24" selection-end-line="93" selection-end-column="24" />
+            <state relative-caret-position="983">
+              <caret line="88" column="19" lean-forward="true" selection-start-line="88" selection-start-column="19" selection-end-line="88" selection-end-column="19" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -42,8 +61,8 @@
       <file leaf-file-name="server.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Server/server.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="165" column="40" lean-forward="true" selection-start-line="165" selection-start-column="40" selection-end-line="165" selection-end-column="40" />
+            <state relative-caret-position="272">
+              <caret line="170" column="34" lean-forward="true" selection-start-line="166" selection-start-column="7" selection-end-line="170" selection-end-column="34" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -66,6 +85,7 @@
       <find>sendStream</find>
       <find>addRFC</find>
       <find>addOK</find>
+      <find>s</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -164,7 +184,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.server">
+  <component name="RunManager" selected="Python.P2S_Client">
     <configuration name="ClientThread" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="PeerToPeerSystem" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -300,13 +320,13 @@
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17857143" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="12" side_tool="true" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.33168316" />
       <window_info anchor="bottom" id="Version Control" order="11" weight="0.42607313" />
       <window_info anchor="bottom" id="Python Console" order="7" weight="0.32838285" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.33168316" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="9" weight="0.44059405" />
-      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.44059405" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3990461" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="10" show_stripe_button="false" />
@@ -323,24 +343,24 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.33168316" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17633928" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Python Console" order="9" />
+      <window_info anchor="bottom" id="Version Control" order="12" weight="0.42607313" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3990461" />
       <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="bottom" id="Terminal" order="10" visible="true" weight="0.32838285" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="Version Control" order="12" weight="0.42607313" />
+      <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="right" id="SciView" order="4" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Python Console" order="9" />
     </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -359,6 +379,36 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/Client/P2S_Client.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1921">
+          <caret line="113" column="83" selection-start-line="113" selection-start-column="83" selection-end-line="113" selection-end-column="83" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Client/P2P_Server.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1581">
+          <caret line="93" column="24" lean-forward="true" selection-start-line="93" selection-start-column="24" selection-end-line="93" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Server/server.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2805">
+          <caret line="165" column="40" lean-forward="true" selection-start-line="165" selection-start-column="40" selection-end-line="165" selection-end-column="40" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Client/P2S_Client.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3502">
@@ -404,8 +454,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Server/server.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="165" column="40" lean-forward="true" selection-start-line="165" selection-start-column="40" selection-end-line="165" selection-end-column="40" />
+        <state relative-caret-position="272">
+          <caret line="170" column="34" lean-forward="true" selection-start-line="166" selection-start-column="7" selection-end-line="170" selection-end-column="34" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
@@ -414,11 +464,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Client/P2P_Server.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="93" column="24" lean-forward="true" selection-start-line="93" selection-start-column="24" selection-end-line="93" selection-end-column="24" />
+        <state relative-caret-position="983">
+          <caret line="88" column="19" lean-forward="true" selection-start-line="88" selection-start-column="19" selection-end-line="88" selection-end-column="19" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Client/RFC_REPO/rfc-2821-Simple Mail Transfer Protocol.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="261">
+          <caret line="4426" column="1" lean-forward="true" selection-start-line="4426" selection-start-column="1" selection-end-line="4426" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Client/RFC_REPO/rfc-2822-Internet Message Format.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="278">
+          <caret line="2859" lean-forward="true" selection-start-line="2859" selection-end-line="2859" />
         </state>
       </provider>
     </entry>
@@ -431,8 +495,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Client/P2S_Client.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="113" column="83" selection-start-line="113" selection-start-column="83" selection-end-line="113" selection-end-column="83" />
+        <state relative-caret-position="187">
+          <caret line="193" column="33" selection-start-line="193" selection-start-column="33" selection-end-line="193" selection-end-column="33" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
