@@ -206,7 +206,7 @@ def server_client(self, connectionSocket):
     print("end while")
 
 
-if __name__ == "__main__":
+if __name__=="__main__":
     try:
         thread_first = threading.Thread(target=p2s_server)
         thread_first.daemon = True
